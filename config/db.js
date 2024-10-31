@@ -3,7 +3,7 @@ const mysql = require('mysql2');
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'RyanDev',
-    password: 'GaspriDB',  // substitua pela senha correta
+    password: 'GaspriDB',  
     database: 'carTechdb'
 });
 

@@ -2,19 +2,15 @@ const db = require('../config/db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-// Secret key for JWT
-const JWT_SECRET = 'sua_chave_secreta_aqui'; // Mantenha esta chave em segredo e fora do código fonte!
+const JWT_SECRET = 'key'; 
 
-// Cadastrar um novo usuário
 exports.cadastrarUsuario = (req, res) => {
     const { username, password } = req.body;
 
-    // Verificar se os dados foram fornecidos
     if (!username || !password) {
         return res.status(400).send('Username e password são obrigatórios');
     }
 
-    // Hash da senha
     bcrypt.hash(password, 10, (err, hash) => {
         if (err) {
             return res.status(500).send('Erro ao criar hash da senha');
@@ -30,7 +26,6 @@ exports.cadastrarUsuario = (req, res) => {
     });
 };
 
-// Fazer login do usuário
 exports.login = (req, res) => {
     const { username, password } = req.body;
 
@@ -55,7 +50,6 @@ exports.login = (req, res) => {
                 return res.status(401).send('Senha incorreta');
             }
 
-            // Login bem-sucedido - gera um token JWT
             const token = jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, { expiresIn: '1h' });
             res.json({ message: 'Login bem-sucedido', token });
         });
