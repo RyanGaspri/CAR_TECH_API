@@ -1,17 +1,15 @@
 const express = require('express');
+const cors = require('cors'); // Importa o pacote cors
 const app = express();
+const db = require('./config/db'); // Certifique-se de ter a conexão com o banco de dados
+const routes = require('./routes'); // Importando as rotas
 
-app.use(express.json());
+app.use(cors()); // Permite requisições de qualquer origem
+app.use(express.json()); // Para permitir o uso de JSON nas requisições
+app.use('/api', routes); // Usando as rotas prefixadas com /api
 
-const servicosRoutes = require('./routes/servicosRoutes');
-const pecasRoutes = require('./routes/pecasRoutes');
-const loginRoutes = require('./routes/loginRoutes');
 
-app.use('/servicos', servicosRoutes);
-app.use('/pecas', pecasRoutes);
-app.use('/login', loginRoutes);
-
-const PORT = 3000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
