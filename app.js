@@ -9,7 +9,7 @@ app.use(express.json()); // Para permitir o uso de JSON nas requisições
 app.use('/api', routes); // Usando as rotas prefixadas com /api
 
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3010;
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });

@@ -2,9 +2,20 @@
 const db = require('../config/db');
 
 exports.createAgendamento = (req, res) => {
-    const { id_servico, id_adm, nome_cliente, contato_cliente, data_agendamento } = req.body;
+    // Definindo valores padrão como null para id_servico e id_adm caso não sejam fornecidos
+    const {
+        id_servico = null,
+        id_adm = null,
+        nome_cliente,
+        contato_cliente,
+        data_agendamento
+    } = req.body;
 
-    const query = 'INSERT INTO Agendamento (id_servico, id_adm, nome_cliente, contato_cliente, data_agendamento) VALUES (?, ?, ?, ?, ?)';
+    const query = `
+        INSERT INTO Agendamento (id_servico, id_adm, nome_cliente, contato_cliente, data_agendamento)
+        VALUES (?, ?, ?, ?, ?)
+    `;
+    
     db.query(query, [id_servico, id_adm, nome_cliente, contato_cliente, data_agendamento], (err, result) => {
         if (err) {
             console.error(err);
@@ -24,9 +35,15 @@ exports.getAgendamentos = (req, res) => {
     });
 };
 
+// Código no back-end para deletar o agendamento
 exports.deletarAgendamento = (req, res) => {
     const { id_agendamento } = req.params;
-    
+    console.log('ID do agendamento recebido:', id_agendamento); // Verifique se o ID está correto
+
+    if (!id_agendamento) {
+        return res.status(400).send('ID do agendamento não fornecido');
+    }
+
     const query = 'DELETE FROM Agendamento WHERE id_agendamento = ?';
     
     db.query(query, [id_agendamento], (err, results) => {
@@ -40,6 +57,7 @@ exports.deletarAgendamento = (req, res) => {
         res.send('Agendamento deletado com sucesso');
     });
 };
+
 
 exports.atualizarAgendamento = (req, res) => {
     const { id_agendamento } = req.params;
