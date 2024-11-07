@@ -1,0 +1,49 @@
+create database carTechdb;
+use carTechdb;
+
+create table Servico(
+id_servico int primary key auto_increment,
+descricao varchar(255) not null,
+preco decimal(10,2) not null,
+status_servico varchar(55) not null
+
+);
+
+create table Agendamento(
+id_agendamento int primary key auto_increment,
+id_servico int,
+id_adm int,
+nome_cliente varchar(55) not null,
+contato_cliente varchar(55) not null unique,
+data_agendamento date not null,
+foreign key (id_servico) references Servico (id_servico),
+foreign key (id_adm) references Administrador(id_adm)
+);
+
+CREATE TABLE administrador (
+    id_adm INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(55) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL
+);
+
+create table ferramenta (
+id_ferramenta int primary key auto_increment,
+categoria varchar(55) not null,
+nome_ferramenta varchar(55) not null
+);
+
+select * from Agendamento;
+
+select * from administrador;
+
+select * from ferramenta;
+
+select * from Servico;
+
+
+
+drop database carTechDB;
+
+DROP TABLE IF EXISTS administrador;
+
+DROP TABLE IF EXISTS Agendamento;
